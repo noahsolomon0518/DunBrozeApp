@@ -12,6 +12,11 @@ const router = express.Router()
 const account = require('./routes/accounts.js')
 const checkAuthenticated = require('./util/authentication.js').checkAuthenticated
 const checkNotAuthenticated = require('./util/authentication.js').checkNotAuthenticated
+const db = require('./db/connection.js')
+console.log(db)
+db().then((res)=>{
+	console.log(res)
+})
 
 initPassport(passport, 
 	username => users.find(user=> user.username === username),
