@@ -1,4 +1,6 @@
 const express = require('express')
+const insertUser = require('../db/authentication').insertUser
+const bcrypt = require('bcrypt')
 const router = express.Router()
 const passport = require('passport')
 const checkAuthenticated = require('../util/authentication.js').checkAuthenticated
@@ -24,18 +26,18 @@ router.get('/register',checkNotAuthenticated, (req,res) => {
 router.post('/register', checkNotAuthenticated, async(req,res) => {
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10)
-		users.push({
-			id: Date.now().toString(),
-			name: req.body.name,
+		user = {
+			clientID: Date.now().toString(),
+			company: req.body.name,
 			username: req.body.username,
 			password: hashedPassword
-		})
+		}
+		await insertUser(user)
 		res.redirect("/account/login")
 	}catch(e){
 		console.log(e)
 	}
 	
-	console.log(users)
 })
 
 module.exports = router
