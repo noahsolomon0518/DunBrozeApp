@@ -1,10 +1,14 @@
 const express = require('express')
-const insertUser = require('../db/authentication').insertUser
 const bcrypt = require('bcrypt')
+const mysql = require('mysql')
+const dbConfig = require('../config/dbConfig.js')
 const router = express.Router()
 const passport = require('passport')
-const checkAuthenticated = require('../util/authentication.js').checkAuthenticated
 const checkNotAuthenticated = require('../util/authentication.js').checkNotAuthenticated
+const checkAuthenticated = require('../util/authentication.js').checkAuthenticated
+const checkAdmin = require('../util/authentication.js').admin
+const verifyAdmin = require('../util/authentication.js').verifyAdmin
+const con = mysql.createConnection(dbConfig)
 router.get('/login',checkNotAuthenticated, (req,res) => {
 	res.render('login.ejs')
 	
@@ -18,26 +22,17 @@ router.post('/login', checkNotAuthenticated, passport.authenticate('local',{
 
 
 
-router.get('/register',checkNotAuthenticated, (req,res) => {
-	
-	res.render('register.ejs')
+
+
+router.post('/logout', (req,res)=>{
+	req.logout()
+	res.redirect('/account/login')
 })
 
-router.post('/register', checkNotAuthenticated, async(req,res) => {
-	try {
-		const hashedPassword = await bcrypt.hash(req.body.password, 10)
-		user = {
-			clientID: Date.now().toString(),
-			company: req.body.name,
-			username: req.body.username,
-			password: hashedPassword
-		}
-		await insertUser(user)
-		res.redirect("/account/login")
-	}catch(e){
-		console.log(e)
-	}
-	
-})
+
+
+
+
+
 
 module.exports = router

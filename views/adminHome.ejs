@@ -1,0 +1,14 @@
+Welcome to admin!
+<% if (messages.success) { %>
+    <p><%= messages.success %></p>
+  <% } %>
+
+<ul>
+    <li><a href="/admin/register">Register</a></li>
+    <li><a href="/admin/addJob">Add Job</a></li>
+    <li><a href="/admin/jobs">Jobs</a></li>
+    <li><a href="/admin/clients">Clients</a></li>
+</ul> 
+<form action="/account/logout" method="POST">
+    <button type="submit">Logout</button>
+</form>

@@ -3,6 +3,7 @@ const query = require('./connection.js')
 module.exports.getUser = (user)=>{
 	return new Promise((resolve,reject)=>{
 		query("SELECT * FROM client WHERE username = \""+user+"\"",(err,result)=>{
+			console.log(result)
 			resolve(result)
 		})
 	}) 

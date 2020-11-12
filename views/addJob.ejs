@@ -1,0 +1,24 @@
+<h1>Add Job</h1>
+<% if (messages.error) { %>
+  <%= messages.error %>
+<% } %>
+<form action="/admin/addJob" method="POST">
+  <div>
+    <label for="company">Company</label>
+    <input type="username" id="company" name="company" required>
+  </div>
+  <div>
+    <label for="Part #">Part ID</label>
+    <input id="part" name="part" required>
+  </div>
+  <div>
+    <label for="npart">Number of parts</label>
+    <input id="npart" name="npart" required>
+  </div>
+  <div>
+    <label for="quote">Intial Quote</label>
+    <input id="quote" name="quote" required>
+  </div>
+  <button type="submit">Add Job</button>
+</form>
+<a href="/admin/home">Back</a>
