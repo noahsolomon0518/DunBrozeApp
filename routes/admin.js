@@ -5,29 +5,31 @@ const router = express.Router()
 const passport = require('passport')
 const { verifyAdmin } = require('../util/authentication.js')
 const bcrypt = require('bcrypt')
+const con = mysql.createConnection(dbConfig)
 
-router.get('/home',verifyAdmin, (req,res)=>{
+router.use(verifyAdmin)
+router.get('/home', (req,res)=>{
     res.render('adminHome.ejs')
 })
 
 
-router.get('/addJob',verifyAdmin, (req,res)=>{
+router.get('/addJob', (req,res)=>{
     res.render('addJob.ejs')
 })
 
-router.post('/addJob',verifyAdmin, (req,res)=>{
+router.post('/addJob', (req,res)=>{
     req.flash('success', 'Job added!')
     res.redirect('/admin/home')
 })
 
 
 
-router.get('/register', verifyAdmin, (req,res) => {
+router.get('/register', (req,res) => {
 	
 	res.render('register.ejs')
 })
 
-router.post('/register', verifyAdmin, async (req,res) => {
+router.post('/register', async (req,res) => {
 	try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 10)
 		user = {
@@ -52,6 +54,14 @@ router.post('/register', verifyAdmin, async (req,res) => {
 		console.log(e)
 	}
 	
+})
+
+
+router.get('/clients', (req,res) => {
+	con.query("SELECT company,clientID from clients", (err,result)=>{
+        console.log(result)
+        res.render('clients.ejs', {result:result})
+    })
 })
 
 module.exports = router

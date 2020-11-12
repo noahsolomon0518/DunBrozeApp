@@ -51,7 +51,25 @@ const verifyAdmin = (req,res, next)=>{
   }
 }
 
+
+
+const verifyClientID = (req,res, next)=>{
+  try{
+    clientID = req.session.passport.user
+    if(clientID == req.params.clientID || clientID==3){
+      next()
+    }else{
+      res.redirect('/account/login')
+    }
+
+  }catch{
+    res.redirect('/account/login')
+  }
+}
+
+
 module.exports.admin = admin
 module.exports.verifyAdmin = verifyAdmin
+module.exports.verifyClientID = verifyClientID
 module.exports.checkAuthenticated = checkAuthenticated
 module.exports.checkNotAuthenticated = checkNotAuthenticated
