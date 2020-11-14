@@ -1,7 +1,7 @@
 const clients = require('./routes/client')
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const initPassport = require('./config/passport.js')
 const passport = require('passport')
 const flash = require('express-flash')
@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use('/clients',clients)
+app.use('/client',clients)
 app.use('/account',account)
 app.use('/admin',admin)
 

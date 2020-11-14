@@ -2,31 +2,30 @@ const express = require('express')
 const mysql = require('mysql')
 const dbConfig = require('../config/dbConfig.js')
 const router = express.Router()
-const passport = require('passport')
 const { verifyAdmin } = require('../util/authentication.js')
 const bcrypt = require('bcrypt')
 const con = mysql.createConnection(dbConfig)
 
 router.use(verifyAdmin)
-router.get('/home', (req,res)=>{
+router.get('/', (req,res)=>{
     res.render('adminHome.ejs')
 })
 
 
 router.get('/addJob', (req,res)=>{
-    res.render('addJob.ejs')
+    res.render('adminAddJob.ejs')
 })
 
 router.post('/addJob', (req,res)=>{
     req.flash('success', 'Job added!')
-    res.redirect('/admin/home')
+    res.redirect('/admin')
 })
 
 
 
 router.get('/register', (req,res) => {
 	
-	res.render('register.ejs')
+	res.render('adminRegister.ejs')
 })
 
 router.post('/register', async (req,res) => {
@@ -42,11 +41,11 @@ router.post('/register', async (req,res) => {
 		con.query(`INSERT INTO clients(company, username, password) VALUES( \"${user.company}\", \"${user.username}\", \"${user.password}\")`,(err,result)=>{
 			if(err){
 				req.flash("error","Username taken")
-				res.redirect("/account/register")
+				res.redirect("/admin/register")
 			}
 			else{
 				req.flash("success","Company was sucessfully registered!")
-				res.redirect("/admin/home")
+				res.redirect("/admin")
 			}
 		})
 
@@ -60,7 +59,7 @@ router.post('/register', async (req,res) => {
 router.get('/clients', (req,res) => {
 	con.query("SELECT company,clientID from clients", (err,result)=>{
         console.log(result)
-        res.render('clients.ejs', {result:result})
+        res.render('adminClients.ejs', {result:result})
     })
 })
 

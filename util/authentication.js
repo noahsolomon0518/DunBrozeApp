@@ -15,18 +15,18 @@ function checkAuthenticated(req, res, next) {
 
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return res.redirect('/home')
+    return res.redirect('/client')
   }
   next()
 }
 
 
-
+//When login if admin login to admin page
 const admin = (req,res, next)=>{
   try{
     clientID = req.session.passport.user
     if(clientID == 3){
-      res.redirect('/admin/home')
+      res.redirect('/admin')
     }else{
       next()
     }
@@ -55,8 +55,9 @@ const verifyAdmin = (req,res, next)=>{
 
 const verifyClientID = (req,res, next)=>{
   try{
+    console.log("YERT")
     clientID = req.session.passport.user
-    if(clientID == req.params.clientID || clientID==3){
+    if((clientID == req.params.clientID) || (clientID==3)){
       next()
     }else{
       res.redirect('/account/login')
