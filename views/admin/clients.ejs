@@ -1,0 +1,8 @@
+<ul>
+    <% result.forEach(function(res) { %>
+        <li>
+            <a href = "/admin/clients/<%= res.clientID %>"><%= res.company %></>
+        </li>
+    <% }); %>
+</ul>
+<a href="/admin">Back</a>

@@ -2,30 +2,22 @@ const express = require('express')
 const mysql = require('mysql')
 const dbConfig = require('../config/dbConfig.js')
 const router = express.Router()
-const { verifyAdmin } = require('../util/authentication.js')
+const { verifyAdmin } = require('../util/adminAuth')
 const bcrypt = require('bcrypt')
 const con = mysql.createConnection(dbConfig)
 
 router.use(verifyAdmin)
 router.get('/', (req,res)=>{
-    res.render('adminHome.ejs')
+    res.render('admin/home.ejs')
 })
 
 
-router.get('/addJob', (req,res)=>{
-    res.render('adminAddJob.ejs')
-})
-
-router.post('/addJob', (req,res)=>{
-    req.flash('success', 'Job added!')
-    res.redirect('/admin')
-})
 
 
 
 router.get('/register', (req,res) => {
 	
-	res.render('adminRegister.ejs')
+	res.render('admin/register.ejs')
 })
 
 router.post('/register', async (req,res) => {
@@ -58,8 +50,15 @@ router.post('/register', async (req,res) => {
 
 router.get('/clients', (req,res) => {
 	con.query("SELECT company,clientID from clients", (err,result)=>{
-        console.log(result)
-        res.render('adminClients.ejs', {result:result})
+        res.render('admin/clients.ejs', {result:result})
+    })
+})
+
+
+
+router.get('/clients/:clientID', (req,res) => {
+	con.query("SELECT * from jobs where ClientID = "+req.params.clientID, (err,jobs)=>{
+        res.render('admin/client.ejs', {jobs:jobs})
     })
 })
 

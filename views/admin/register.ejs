@@ -1,8 +1,13 @@
-<h1>Login</h1>
+
+<h1>Register</h1>
 <% if (messages.error) { %>
   <%= messages.error %>
 <% } %>
-<form action="/account/login" method="POST">
+<form action="/admin/register" method="POST">
+  <div>
+    <label for="name">Company</label>
+    <input type="text" id="name" name="name" required>
+  </div>
   <div>
     <label for="username">Username</label>
     <input type="username" id="username" name="username" required>
@@ -11,6 +16,6 @@
     <label for="password">Password</label>
     <input type="password" id="password" name="password" required>
   </div>
-  <button type="submit">Login</button>
+  <button type="submit">Register</button>
 </form>
-
+<a href="/admin">Back</a>
