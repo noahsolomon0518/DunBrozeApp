@@ -1,4 +1,7 @@
 Client Homepage
+<% if (messages.error) { %>
+    <%= messages.error %>
+  <% } %>
 <form action="/logout" method="POST">
     <button type="submit">Logout</button>
 </form>

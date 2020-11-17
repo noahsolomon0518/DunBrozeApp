@@ -5,6 +5,7 @@ const verifyAdmin = (req,res, next)=>{
       if(clientID == 3){
         next()
       }else{
+        req.flash("error", "No access to admin page")
         res.redirect('/login')
       }
   

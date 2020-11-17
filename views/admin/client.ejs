@@ -1,8 +1,6 @@
 <h1>Jobs For <%= jobs[0].company %></h1>
 <% jobs.forEach(function(job) { %>
-    <strong>JOB: <%= job.jobID %></strong>
-    Part ID: <%= job.partID %>
-    Date Issued: <%= job.Date %> 
-
+    <a href="/admin/clients/<%= job.clientID %>/<%= job.jobID %>"><strong>Job ID: <%= job.jobID %></strong></a>
+    <br>
 <% }); %>
 <a href="/admin/clients">Back</a>

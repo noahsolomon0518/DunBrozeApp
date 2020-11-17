@@ -62,4 +62,12 @@ router.get('/clients/:clientID', (req,res) => {
     })
 })
 
+
+router.get('/clients/:clientID/:jobID', (req,res) => {
+	con.query("SELECT * from jobs where jobID = "+req.params.jobID, (err,job)=>{
+		
+        res.render('admin/job.ejs', {job:job[0]})
+    })
+})
+
 module.exports = router
