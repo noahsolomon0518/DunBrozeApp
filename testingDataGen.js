@@ -22,5 +22,22 @@ initJobs = function(){
 
 
 initChecklists = function(){
-    checklistItems = ["debir", "set up machine", "cut metal", "use lave"]
+    checklistItems = ["debir", "set up machine", "cut metal", "use lave", "clean machine"]
+    for(z = 0; z<5; z++){
+        con.query("INSERT INTO checklistItem(checklistItemActivity) VALUES("+ checklistItems[z]+")",(err,job)=>{
+            
+        })
+
+    }
 }
+test = function(){
+    con.query("SELECT * FROM clients", (err,result1)=>{
+        clientID = result1[0].clientID
+        con.query("SELECT * FROM jobs where clientID = "+clientID, (err, result2)=>{
+            console.log(clientID)
+        })
+    })
+
+}
+
+test()

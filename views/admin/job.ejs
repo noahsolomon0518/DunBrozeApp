@@ -1,8 +1,51 @@
 <h1>Job <%= job.jobID%></h1>
 <p>Company: <%= job.company%></p>
 <p>Part ID: <%= job.partID%></p>
-<p>Status: <%= job.status%></p>
+
+<div id="job-completion-div" style="border-radius:5px;width: 100px; height: 20px; background-color: darkgray;">
+    
+</div>
 <h4>COMMENTS:</h4>
+<br> 
 <br>
+<br>
+<h4>CHECKLIST LOG:</h4>
+<table>
+    
+    
+    <tr>
+        <th>Checklist Item</th>
+        <th>Short Description</th>
+        <th>Time Estimate</th>
+        <th>Status</th>
+    </tr>
+    <% checklist.forEach(function(item) { %>
+        <tr>
+            <td><%= item.sequence%></td>
+            <td><%= item.checklistActivity%></td>
+            <td><%= item.timeEstimate%></td>
+            <% switch (item.status) {
+                case 0 : %>
+                        <td style="background-color: red;"><%= item.status%></td>
+                        <% break;
+                
+                case 1 : %>
+                        <td style="background-color: yellow;"><%= item.status%></td>
+                        <% break;
+                
+                case 2 : %>
+                        <td style="background-color: green;"><%= item.status%></td>
+                        <% break;
+                
+                } %>
+
+        </tr>
+    <% }); %>
+</table> 
+<script>
+    completion = document.getElementById("job-completion-div")
+    percent = <%= completion %>*100
+    completion.innerHTML = "<div style= \"width: "+ percent+"px; height:20px; background-color: blue; border-radius:5px; color:whitesmoke; font-weight:600\">Status</div>"
+</script>
 
 <a href="/admin/clients/<%= job.clientID%>">Back</a>
