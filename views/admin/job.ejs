@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/admin/job/job.css">
 <h1>Job <%= job.jobID%></h1>
 <p>Company: <%= job.company%></p>
 <p>Part ID: <%= job.partID%></p>
@@ -6,10 +7,12 @@
     
 </div>
 <h4>COMMENTS:</h4>
+
 <br> 
 <br>
 <br>
 <h4>CHECKLIST LOG:</h4>
+<div class = "edit-checklist">Edit Checklist</div>
 <table>
     
     
@@ -20,7 +23,7 @@
         <th>Status</th>
     </tr>
     <% checklist.forEach(function(item) { %>
-        <tr>
+        <tr class = "checklist-row">
             <td><%= item.sequence%></td>
             <td><%= item.checklistActivity%></td>
             <td><%= item.timeEstimate%></td>
@@ -37,15 +40,19 @@
                         <td style="background-color: green;"><%= item.status%></td>
                         <% break;
                 
-                } %>
-
+                    } %>
+                <td class = "edit checklist-icon">&#9998</td>
+                <td class = "move-up checklist-icon">&uarr;</td>
+                <td class = "move-down checklist-icon">&darr;</td>
+                <td class = "delete checklist-icon">&#10005</td>
         </tr>
     <% }); %>
+
 </table> 
 <script>
     completion = document.getElementById("job-completion-div")
     percent = <%= completion %>*100
     completion.innerHTML = "<div style= \"width: "+ percent+"px; height:20px; background-color: blue; border-radius:5px; color:whitesmoke; font-weight:600\">Status</div>"
 </script>
-
+<script src="/admin/job/job.js"></script>
 <a href="/admin/clients/<%= job.clientID%>">Back</a>

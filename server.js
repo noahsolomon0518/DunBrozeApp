@@ -15,6 +15,7 @@ const admin = require('./routes/admin.js')
 //Middleware
 initPassport(passport)
 app.set('view-engine','ejs')
+app.use(express.static('public'))
 app.use(session({secret:"hello",resave: false, saveUninitialized: false}))
 app.use(express.urlencoded({extended:false}))
 app.use(flash())
