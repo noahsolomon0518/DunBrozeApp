@@ -1,9 +1,12 @@
 <link rel="stylesheet" href="/admin/job/job.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+<div class = "edit-job">Edit Job</div>
 <h1>Job <%= job.jobID%></h1>
-<p>Company: <%= job.company%></p>
-<p>Part ID: <%= job.partID%></p>
+<p>Company: <input class = "form" type="text" value="<%= job.company%>" readonly></p>
+<p>Part ID: <input class = "form" type="text" value="<%= job.partID%>" readonly></p>
 
-<div id="job-completion-div" style="border-radius:5px;width: 100px; height: 20px; background-color: darkgray;">
+<div id="job-completion-div" style="border-radius:5px;width: 100px; height: 20px; background-color: darkgray;"></div>
+<div id = "input1">
     
 </div>
 <h4>COMMENTS:</h4>
@@ -12,7 +15,6 @@
 <br>
 <br>
 <h4>CHECKLIST LOG:</h4>
-<div class = "edit-checklist">Edit Checklist</div>
 <table>
     
     
@@ -47,12 +49,13 @@
                 <td class = "delete checklist-icon">&#10005</td>
         </tr>
     <% }); %>
-
+    <tr class = "checklist-add-job">Add Job</tr>
 </table> 
 <script>
     completion = document.getElementById("job-completion-div")
     percent = <%= completion %>*100
     completion.innerHTML = "<div style= \"width: "+ percent+"px; height:20px; background-color: blue; border-radius:5px; color:whitesmoke; font-weight:600\">Status</div>"
 </script>
+<script src="/admin/job/autocorrect.js"></script>
 <script src="/admin/job/job.js"></script>
 <a href="/admin/clients/<%= job.clientID%>">Back</a>
