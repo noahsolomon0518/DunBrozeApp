@@ -1,8 +1,7 @@
-console.log("WOKRS")
 checklistIcons = document.querySelectorAll("td.checklist-icon")
 editChecklistDiv = document.querySelector("div.edit-job")
 forms = document.querySelectorAll(".form")
-
+addJob = document.querySelector(".checklist-add-job")
 
 
 
@@ -13,13 +12,15 @@ const setUp = function(){
             editChecklistDiv.innerHTML = "Save"
     
         }else{
-            saveChecklist()
+            saveEditJob()
             editChecklistDiv.innerHTML = "Edit Job"
         }
     })
+
+
     
     for(let icon of checklistIcons){
-        icon.style.visibility ==  "hidden"
+        icon.style.visibility =  "hidden"
         
     }
 }
@@ -40,6 +41,13 @@ const editForms = function(){
     }
 }
 
+const editAddJob = function(){
+    addJob.style.visibility = "visible"
+}
+
+
+
+
 
 //Save functions
 const saveChecklist = function(){
@@ -49,25 +57,33 @@ const saveChecklist = function(){
     }
 }
 
+const saveForms = function(){
+    for(let form of forms){
+        form.readOnly = true
+        form.classList.remove("editable")
+    }
+}
+
+const saveJobs = function(){
+    addJob.style.visibility = "hidden"
+}
+
 
 //Triggers edit functions
 const editJob = function(){
     editChecklist()
     editForms()
-    
+    editAddJob()
 }
 
 
-
+const saveEditJob = function(){
+    saveChecklist()
+    saveForms()
+    saveJobs()
+}
 
 setUp()
 
 
-
-autocorrect({
-    src: function(){
-        return ['hello', 'yo']
-    },
-    parent: "input1"
-})
 

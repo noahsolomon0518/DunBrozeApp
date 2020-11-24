@@ -6,27 +6,28 @@
 <p>Part ID: <input class = "form" type="text" value="<%= job.partID%>" readonly></p>
 
 <div id="job-completion-div" style="border-radius:5px;width: 100px; height: 20px; background-color: darkgray;"></div>
-<div id = "input1">
-    
-</div>
+
 <h4>COMMENTS:</h4>
 
 <br> 
 <br>
 <br>
 <h4>CHECKLIST LOG:</h4>
-<table>
+<table class = "checklist">
     
-    
-    <tr>
-        <th>Checklist Item</th>
-        <th>Short Description</th>
-        <th>Time Estimate</th>
-        <th>Status</th>
-    </tr>
-    <% checklist.forEach(function(item) { %>
+    <thead>
+        <tr>
+            <th>Checklist Item</th>
+            <th>Short Description</th>
+            <th>Time Estimate</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% checklist.forEach(function(item) { %>
         <tr class = "checklist-row">
-            <td><%= item.sequence%></td>
+            <td class = "checklist-index"><%= item.sequence%></td>
             <td><%= item.checklistActivity%></td>
             <td><%= item.timeEstimate%></td>
             <% switch (item.status) {
@@ -43,19 +44,22 @@
                         <% break;
                 
                     } %>
-                <td class = "edit checklist-icon">&#9998</td>
-                <td class = "move-up checklist-icon">&uarr;</td>
-                <td class = "move-down checklist-icon">&darr;</td>
-                <td class = "delete checklist-icon">&#10005</td>
+            <td class = "edit checklist-icon">&#9998</td>
+            <td class = "move-up checklist-icon">&uarr;</td>
+            <td class = "move-down checklist-icon">&darr;</td>
+            <td class = "delete checklist-icon">&#10005</td>
         </tr>
-    <% }); %>
-    <tr class = "checklist-add-job">Add Job</tr>
+        <% }); %>
+    </tbody>
+    <tr>
+        <td colspan = "4" class = "checklist-add-job"><strong>Add Job</strong></td>
+    </tr>
 </table> 
 <script>
     completion = document.getElementById("job-completion-div")
     percent = <%= completion %>*100
     completion.innerHTML = "<div style= \"width: "+ percent+"px; height:20px; background-color: blue; border-radius:5px; color:whitesmoke; font-weight:600\">Status</div>"
 </script>
-<script src="/admin/job/autocorrect.js"></script>
+<script src="/admin/job/checklist.js"></script>
 <script src="/admin/job/job.js"></script>
 <a href="/admin/clients/<%= job.clientID%>">Back</a>

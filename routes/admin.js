@@ -65,18 +65,21 @@ router.get('/clients/:clientID', (req,res) => {
 
 router.get('/clients/:clientID/:jobID', (req,res) => {
 	jobID = req.params.jobID
-	con.query("SELECT * FROM checklist JOIN checklistItem ON checklist.checklistItemID = checklistItem.checklistItemID WHERE checklist.jobID ="+jobID, (err,checklist)=>{
-		completedMinutes = 0
-		totalMinutes = 0
-		for(i = 0; i<checklist.length; i++){
-			if(checklist[i].status == 2){
-				completedMinutes+=checklist[i].timeEstimate
+	con.query("SELECT * FROM jobs where jobID = "+ jobID, (err,job)=>{
+		con.query("SELECT * FROM checklist JOIN checklistItem ON checklist.checklistItemID = checklistItem.checklistItemID WHERE checklist.jobID ="+jobID, (err,checklist)=>{
+			completedMinutes = 0
+			totalMinutes = 0
+			for(i = 0; i<checklist.length; i++){
+				if(checklist[i].status == 2){
+					completedMinutes+=checklist[i].timeEstimate
+				}
+				totalMinutes += checklist[i].timeEstimate
+	
 			}
-			totalMinutes += checklist[i].timeEstimate
+			completion = completedMinutes/totalMinutes
+			res.render('admin/job.ejs', {job:job[0],checklist:checklist, completion:completion})
+		})
 
-		}
-		completion = completedMinutes/totalMinutes
-		res.render('admin/job.ejs', {job:jobID,checklist:checklist, completion:completion})
 	})
     
 })
